@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.lti.idss.poc.grpc";
+
+message UserRequest {
+    int32 user_id = 1;
+}
+
+message UserResponse {
+    int32 user_id = 1;
+    string name = 2;
+    string country = 3;
+    string status = 4;
+}
+
+message AllUserRequest {
+}
+
+message AllUserResponse {
+    repeated UserResponse user = 1;
+}
+
+service UserService {
+    // Unary
+    rpc GetUserDetails(UserRequest) returns (UserResponse);
+
+    // Unary
+    rpc GetAllUserDetailsViaUnary(AllUserRequest) returns (AllUserResponse);
+
+    // Server-side Stream
+    rpc GetAllUserDetailsViaStream(AllUserRequest) returns (stream UserResponse);
+
+    // Client-side Stream
+    // TODO: Change name to TestClientSideStream
+    rpc LogUserDetailsViaClientStream(stream UserRequest) returns (AllUserResponse);
+}
+

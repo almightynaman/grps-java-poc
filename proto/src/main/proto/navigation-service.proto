@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.lti.idss.poc.grpc";
+
+message TripRequest {
+    int32 distanceTravelled = 1;
+}
+
+message TripResponse {
+    int32 remainingDistance = 1;
+}
+
+service NavigationService {
+    // Bi-directional Stream
+    rpc Navigate(stream TripRequest) returns (stream TripResponse);
+}
